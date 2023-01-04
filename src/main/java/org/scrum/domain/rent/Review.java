@@ -1,4 +1,4 @@
-package org.scrum.domain.project;
+package org.scrum.domain.rent;
 
 import java.io.Serializable;
 import java.util.Date;

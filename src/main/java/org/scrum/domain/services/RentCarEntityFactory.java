@@ -1,8 +1,8 @@
 package org.scrum.domain.services;
 
-import org.scrum.domain.project.Autovehicul;
-import org.scrum.domain.project.Client;
-import org.scrum.domain.project.Inchiriere;
+import org.scrum.domain.rent.Autovehicul;
+import org.scrum.domain.rent.Client;
+import org.scrum.domain.rent.Inchiriere;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -21,8 +21,8 @@ public class RentCarEntityFactory implements IRentCarEntityFactory {
     }
 
     @Override
-    public Inchiriere creareInchiriereStandard(Client client, Autovehicul autovehicul, Date startDate, Integer zile) {
-        return new Inchiriere(null, client, autovehicul, startDate, zile);
+    public Inchiriere creareInchiriereStandard(Date startDate) {
+        return new Inchiriere(startDate);
     }
 
     // Dependency
@@ -51,9 +51,9 @@ public class RentCarEntityFactory implements IRentCarEntityFactory {
     public void initDomainServiceEntities() {
         logger.info(">> PostConstruct :: initDomainServiceEntities");
         for (int i = 1; i < 4; i++) {
-            Client newClient = new Client("Client_" + i, "07" + String.valueOf(i).repeat(8), "client_" + i + "@gmail.com");
-            Autovehicul newAutovehicul = new Autovehicul("Model" + i, "RO " + String.valueOf(i).repeat(3), i * 100.00);
-            Inchiriere newInchiriere = creareInchiriereStandard(newClient, newAutovehicul, new Date(), i + 2);
+//            Client newClient = new Client("Client_" + i, "07" + String.valueOf(i).repeat(8), "client_" + i + "@gmail.com");
+//            Autovehicul newAutovehicul = new Autovehicul("Model" + i, "RO " + String.valueOf(i).repeat(3), i * 100.00);
+            Inchiriere newInchiriere = creareInchiriereStandard(new Date());
             entityRepository.save(newInchiriere);
         }
         logger.info(">> EntityRepository inchiriere.count :: " + entityRepository.count());

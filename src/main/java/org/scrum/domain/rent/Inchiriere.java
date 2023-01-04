@@ -1,4 +1,4 @@
-package org.scrum.domain.project;
+package org.scrum.domain.rent;
 
 import org.springframework.transaction.annotation.Transactional;
 
@@ -9,6 +9,11 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.time.Duration;
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.ZoneId;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -37,8 +42,8 @@ public class Inchiriere implements Serializable {
     @Column(name = "data_returnare")
     private Date dataReturnare;
 
-    @NotNull(message = "ZileInchiriere is required!")
-    @Min(value = 1, message = "ZileInchiriere must be equal or bigger then 1!")
+    //    @NotNull(message = "ZileInchiriere is required!")
+//    @Min(value = 1, message = "ZileInchiriere must be equal or bigger then 1!")
     @Column(name = "zile_inchiriere")
     private Integer zileInchiriere;
     @Column(name = "cost_inchiriere")
@@ -65,6 +70,10 @@ public class Inchiriere implements Serializable {
         this.autovehicul = autovehicul;
     }
 
+    public Inchiriere(Date dataInchiriere) {
+        this.dataInchiriere = dataInchiriere;
+    }
+
     private Date calculDataReturnare(Date data, Integer zile) {
         Calendar c = Calendar.getInstance();
         c.setTime(data);
@@ -74,6 +83,18 @@ public class Inchiriere implements Serializable {
 
     private Double calculCostInchiriere(Autovehicul a, Integer zile) {
         return a.getCostInchiriere() * zile;
+    }
+
+    private Double calculCostInchiriere(Date dataStart, Date dataRetur, Double pret) {
+        long difference_In_Time = dataRetur.getTime() - dataStart.getTime();
+        long nrzile = (difference_In_Time / (1000 * 60 * 60 * 24)) % 365;
+        return pret * nrzile;
+    }
+
+    private Integer calculZileInchiriere(Date dataStart, Date dataRetur) {
+        long difference_In_Time = dataRetur.getTime() - dataStart.getTime();
+        long nrzile = (difference_In_Time / (1000 * 60 * 60 * 24)) % 365;
+        return (int) nrzile;
     }
 
     public Integer getIdInchiriere() {
@@ -122,6 +143,16 @@ public class Inchiriere implements Serializable {
 
     public Double getCostInchiriere() {
         return costInchiriere;
+    }
+
+    public void adaugareClient(String numeClient, String numar_telefon, String email) {
+        this.client = new Client(numeClient, numar_telefon, email);
+    }
+
+    public void setDataReturnare(Date dataReturnare) {
+        this.dataReturnare = dataReturnare;
+        this.costInchiriere = calculCostInchiriere(this.dataInchiriere, dataReturnare, this.autovehicul.getCostInchiriere());
+        this.zileInchiriere = calculZileInchiriere(this.dataInchiriere, dataReturnare);
     }
 
     @Override

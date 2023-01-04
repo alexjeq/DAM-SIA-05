@@ -1,9 +1,6 @@
 package org.scrum.domain.services;
 
-import org.scrum.domain.project.Autovehicul;
-import org.scrum.domain.project.Client;
-import org.scrum.domain.project.Inchiriere;
-import org.scrum.domain.project.PermisConducere;
+import org.scrum.domain.rent.*;
 
 import java.util.Date;
 
@@ -16,21 +13,22 @@ import java.util.Date;
  * (5) Get rent summary data: CarRentView
  */
 public interface IRegisterCarRentBusinessWorkflowService {
-    // (1) Create new rent with default template: client, car, startDate, durationRentDays
-    Integer initiereInchiriere(Client client, Autovehicul autovehicul, Date dataInceput, Integer zile);
+    // (1) Create new rent with default template: dateStart
+    Integer initiereInchiriere(Date dataInceput);
 
-    // (2) Add car to rent: car
+    // (2) Add client to rent: client
+    Integer adaugareClient(Integer idInchiriere, String numeClient, String numarTelefon, String email);
+
+    // (3) Add car to rent: car
     Integer alegereAutovehicul(Integer idInchiriere, Autovehicul autovehicul);
 
-    // (3) Set rent duration in days: durationRentDays
-    Integer setareDurataInchiriere(Integer idInchiriere, Integer zile);
+    // (4) Set rent return date: dataRetur
+    Integer setareDataRetur(Integer idInchiriere, Date dataRetur);
 
-    // (4) Get rent amount: rentID, car
-    Double generareCostInchiriere(Integer idInchiriere);
+    // (5) Get rent summary data: CarRentView
+    InchiriereView generareInchiriereSumar(Integer idInchiriere);
 
-    // (5) Check client's driver's license
-    Integer verificarePermisConducere(Integer idInchiriere, PermisConducere permisConducere);
+    //_________________________________________________________
 
-    // (6) Get rent summary data: CarRentView
-    Inchiriere generareInchiriereSumar(Integer idInchiriere);
+
 }

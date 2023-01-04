@@ -1,6 +1,6 @@
 package org.scrum.domain.services;
 
-import org.scrum.domain.project.Inchiriere;
+import org.scrum.domain.rent.Inchiriere;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

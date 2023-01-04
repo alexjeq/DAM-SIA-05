@@ -1,4 +1,4 @@
-package org.scrum.domain.project;
+package org.scrum.domain.rent;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
