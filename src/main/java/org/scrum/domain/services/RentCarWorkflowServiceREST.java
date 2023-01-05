@@ -51,6 +51,7 @@ public class RentCarWorkflowServiceREST {
 
     @RequestMapping(path = "/initiereInchiriere", method = RequestMethod.GET,
             produces = {MediaType.APPLICATION_JSON_VALUE})
+
     @ResponseBody
     public Integer initiereInchiriereRequestHandler(
             @RequestParam("dataInceput") String dataInceput) throws Exception {

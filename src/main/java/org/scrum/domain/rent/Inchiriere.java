@@ -157,7 +157,7 @@ public class Inchiriere implements Serializable {
 
     @Override
     public String toString() {
-        return "\n\t\tInchiriere [idInchiriere=" + idInchiriere + ", client=" + client.getNume() + ", autovehicul=" + autovehicul.getModel() + ", dataInchiriere=" + dataInchiriere + ", dataReturnare=" + dataReturnare + ", costInchiriere=" + costInchiriere + "]";
+        return "\n\t\tInchiriere [idInchiriere=" + idInchiriere + ", client=" + (client != null ? client.getNume() : "-") + ", autovehicul=" + (autovehicul != null ? autovehicul.getModel() : "-") + ", dataInchiriere=" + dataInchiriere + ", dataReturnare=" + dataReturnare + ", costInchiriere=" + costInchiriere + "]";
 
     }
 }
