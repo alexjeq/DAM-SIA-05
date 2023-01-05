@@ -18,7 +18,7 @@ public class RegisterCarRentBusinessWorkflowServiceImpl implements IRegisterCarR
     @Autowired
     private IRentCarEntityFactory entityFactory;
 
-    // (1) Create new rent with default template: client, startDate
+    // (1) Create new rent with default template: startDate
     @Override
     public Integer initiereInchiriere(Date dataInceput) {
         Inchiriere inchiriere = entityFactory.creareInchiriereStandard(dataInceput);
