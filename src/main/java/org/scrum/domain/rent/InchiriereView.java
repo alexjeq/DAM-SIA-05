@@ -12,7 +12,7 @@ import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
 
-@XmlRootElement(name="inchiriere")
+@XmlRootElement(name="rent")
 @XmlAccessorType(XmlAccessType.PROPERTY)
 public class InchiriereView {
     private Integer idInchiriere;

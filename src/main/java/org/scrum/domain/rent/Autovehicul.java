@@ -1,11 +1,10 @@
 package org.scrum.domain.rent;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonRootName;
 
 import javax.persistence.*;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -13,9 +12,9 @@ import java.util.List;
 
 @Entity
 @JsonIgnoreProperties({"serieSasiu", "nrImatriculare"}) //not to show sensitive data
-@XmlRootElement(name = "autovehicul")
+@XmlRootElement(name = "car")
+@JsonRootName("car")
 @XmlAccessorType(XmlAccessType.NONE)
-
 public class Autovehicul implements Comparable<Autovehicul>, Serializable {
     @Id
     @GeneratedValue
@@ -195,6 +194,8 @@ public class Autovehicul implements Comparable<Autovehicul>, Serializable {
         this.costInchiriere = costInchiriere;
     }
 
+    @XmlElementWrapper(name = "rents")
+    @XmlElement(name = "rent")
     public List<Inchiriere> getInchirieri() {
         return inchirieri;
     }

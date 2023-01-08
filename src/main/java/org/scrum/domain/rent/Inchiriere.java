@@ -1,5 +1,8 @@
 package org.scrum.domain.rent;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonRootName;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
@@ -7,6 +10,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
@@ -17,7 +21,8 @@ import java.time.ZoneId;
 import java.util.Calendar;
 import java.util.Date;
 
-@XmlRootElement(name = "inchiriere")
+@XmlRootElement(name = "rent")
+@JsonRootName("rent")
 @XmlAccessorType(XmlAccessType.NONE)
 @Entity
 @Transactional
@@ -29,6 +34,7 @@ public class Inchiriere implements Serializable {
     @Column(name = "id_inchiriere")
     private Integer idInchiriere;
     @ManyToOne(cascade = CascadeType.ALL)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
     protected Client client;
     @ManyToOne(cascade = CascadeType.ALL)
     protected Autovehicul autovehicul;

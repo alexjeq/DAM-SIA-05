@@ -34,6 +34,14 @@ public class RegisterCarRentBusinessWorkflowServiceImpl implements IRegisterCarR
         return inchiriere.getIdInchiriere();
     }
 
+    @Override
+    public Integer alegereClient(Integer idInchiriere, Client client){
+        Inchiriere inchiriere = entityRepository.getById(idInchiriere);
+        inchiriere.setClient(client);
+        inchiriere = entityRepository.save(inchiriere);
+        return inchiriere.getIdInchiriere();
+    }
+
     // (2) Add car to rent: car
     @Override
     public Integer alegereAutovehicul(Integer idInchiriere, Autovehicul autovehicul) {

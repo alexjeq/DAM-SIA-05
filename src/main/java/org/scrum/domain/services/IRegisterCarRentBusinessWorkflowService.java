@@ -20,6 +20,9 @@ public interface IRegisterCarRentBusinessWorkflowService {
     Integer adaugareClient(Integer idInchiriere, String numeClient, String numarTelefon, String email);
 
     // (3) Add car to rent: car
+    Integer alegereClient(Integer idInchiriere, Client client);
+
+    // (3) Add car to rent: car
     Integer alegereAutovehicul(Integer idInchiriere, Autovehicul autovehicul);
 
     // (4) Set rent return date: dataRetur

@@ -1,0 +1,36 @@
+.jeq-side-bar-container {
+    padding-top: 16px;
+    color: #b2b2b2;
+
+    .jeq-side-bar-elem {
+        cursor: pointer;
+
+        .jeq-side-bar-elem-name {
+            padding: 8px 16px;
+        }
+    }
+
+    .jeq-side-bar-elem-container {
+        display: none;
+    }
+
+    .jeq-side-bar-elem-active {
+        .jeq-side-bar-elem-name {
+            background-color: #0072aa;
+            color: white;
+        }
+
+        .jeq-side-bar-elem-container {
+            display: block;
+            background-color: #40474e;
+
+            .jeq-side-bar-elem-item-name {
+                padding: 8px 16px;
+            }
+
+            .jeq-side-bar-elem-item-name-active {
+                color: white;
+            }
+        }
+    }
+}

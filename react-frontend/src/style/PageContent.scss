@@ -1,0 +1,22 @@
+.jeq-row-side-menu {
+    height: calc(100vh - 42.73px);
+    width: 100%;
+}
+
+.jeq-no-right-padding {
+    padding-right: 0 !important;
+}
+
+.jeq-content-page-container {
+    padding-left: 16px;
+    padding-top: 16px;
+
+    .jeq-page-header{
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .jeq-table{
+        margin-top: 16px;
+    }
+}
