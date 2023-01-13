@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import "react-datepicker/dist/react-datepicker.css";
 import moment from 'moment';
-import CustomersService from '../../services/CustomersService';
 import RentsService from '../../services/RentsService';
 
 class ViewRent extends Component {
@@ -24,7 +23,6 @@ class ViewRent extends Component {
                 start_date: res.data.dataInchiriere != null ? moment(new Date(res.data.dataInchiriere)).format("DD/MM/YYYY") : null,
                 customer: res.data.numeClient,
                 car: res.data.modelAutovehicul,
-                end_date: res.data.cnp,
                 end_date: res.data.dataReturnare != null ? moment(new Date(res.data.dataReturnare)).format("DD/MM/YYYY") : null,
                 total_cost: res.data.costInchiriere + " $",
             })

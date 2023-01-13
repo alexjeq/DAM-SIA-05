@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import CustomersService from '../../services/CustomersService';
-// import "./../style/Header.scss";
 
 class CustomersList extends Component {
     constructor(props) {

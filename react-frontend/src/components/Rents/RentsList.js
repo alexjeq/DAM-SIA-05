@@ -1,10 +1,7 @@
 import moment from 'moment/moment';
 import React, { Component } from 'react';
 import RentsService from '../../services/RentsService';
-import CarsService from '../../services/CarsService';
-import axios from 'axios';
 import { Label } from 'semantic-ui-react';
-// import "./../style/Header.scss";
 
 class RentsList extends Component {
     constructor(props) {
@@ -79,7 +76,6 @@ class RentsList extends Component {
                         <tbody>
                             {
                                 this.state.rents.map(rent => {
-                                    console.log(rent?.car ?? "not found");
                                     return (
                                         <tr key={rent.idInchiriere}>
                                             <td>{rent.idInchiriere}</td>

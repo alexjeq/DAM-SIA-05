@@ -3,7 +3,6 @@ import Select from "react-select";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import CarsService from '../../services/CarsService';
-import { Store } from 'react-notifications-component';
 
 class AddCar extends Component {
     constructor(props) {
@@ -43,36 +42,10 @@ class AddCar extends Component {
         }
         CarsService.createCar(payload).then(res => {
             if (res.data.idAutovehicul > 0) {
-                // Store.addNotification({
-                //     title: "Cars",
-                //     message: "Car was successfuly added!",
-                //     type: "success",
-                //     insert: "top",
-                //     container: "top-right",
-                //     animationIn: ["animate__animated", "animate__fadeIn"],
-                //     animationOut: ["animate__animated", "animate__fadeOut"],
-                //     dismiss: {
-                //         duration: 5000,
-                //         onScreen: true
-                //     }
-                // });
                 this.props.history.push("/cars/cars-list");
             }
         }).catch(e => {
             console.log(e);
-            // Store.addNotification({
-            //     title: "Cars",
-            //     message: "Something went wrong!",
-            //     type: "danger",
-            //     insert: "top",
-            //     container: "top-right",
-            //     animationIn: ["animate__animated", "animate__fadeIn"],
-            //     animationOut: ["animate__animated", "animate__fadeOut"],
-            //     dismiss: {
-            //         duration: 5000,
-            //         onScreen: true
-            //     }
-            // });
         })
     }
 

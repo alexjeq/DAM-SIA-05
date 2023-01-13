@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import CustomersService from '../../services/CustomersService';
-import { Store } from 'react-notifications-component';
 
 class AddCustomer extends Component {
     constructor(props) {
@@ -35,36 +34,10 @@ class AddCustomer extends Component {
         }
         CustomersService.createCustomer(payload).then(res => {
             if (res.data.idClient > 0) {
-                // Store.addNotification({
-                //     title: "Customers",
-                //     message: "Customer was successfuly added!",
-                //     type: "success",
-                //     insert: "top",
-                //     container: "top-right",
-                //     animationIn: ["animate__animated", "animate__fadeIn"],
-                //     animationOut: ["animate__animated", "animate__fadeOut"],
-                //     dismiss: {
-                //         duration: 5000,
-                //         onScreen: true
-                //     }
-                // });
                 this.props.history.push("/customers/customers-list");
             }
         }).catch(e => {
             console.log(e);
-            // Store.addNotification({
-            //     title: "Customers",
-            //     message: "Something went wrong!",
-            //     type: "danger",
-            //     insert: "top",
-            //     container: "top-right",
-            //     animationIn: ["animate__animated", "animate__fadeIn"],
-            //     animationOut: ["animate__animated", "animate__fadeOut"],
-            //     dismiss: {
-            //         duration: 5000,
-            //         onScreen: true
-            //     }
-            // });
         })
     }
 

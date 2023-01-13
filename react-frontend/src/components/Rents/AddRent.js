@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import Select from "react-select";
 import DatePicker from "react-datepicker";
-import axios from 'axios';
 import RentsService from '../../services/RentsService';
 import moment from 'moment';
 import CustomersService from '../../services/CustomersService';
@@ -46,28 +45,14 @@ class AddRent extends Component {
                 customers: customers
             });
         });
-        // CarsService.getCars().then(res => {
-        //     let cars = [];
-        //     res.data._embedded.cars.forEach(element => {
-        //         cars.push({
-        //             value: element.idAutovehicul,
-        //             label: element.model,
-        //         })
-        //     });
-        //     this.setState({
-        //         cars: cars
-        //     });
-        // });
     }
 
     getCars = () => {
         RentsService.getCarsToDeleteFromSelect(this.state.id_car_rent).then(res => {
             let carIdsToDelete = res.data.toString();
             let carsArray = carIdsToDelete.toString().split("/");
-            console.log("111");
             CarsService.getCars().then(res => {
-            console.log("222");
-            let cars = [];
+                let cars = [];
                 res.data._embedded.cars.forEach(element => {
                     if (!carsArray.includes(element.idAutovehicul.toString())) {
                         cars.push({
@@ -99,6 +84,31 @@ class AddRent extends Component {
                         dateFormat="dd/MM/yyyy"
                         onChange={(date) => this.setState({
                             start_date: date
+                        })}
+                    />
+                </div>
+            );
+            case 2: return (
+                <div className="form-group">
+                    <label>End date</label>
+                    <DatePicker
+                        selected={this.state.end_date}
+                        dateFormat="dd/MM/yyyy"
+                        onChange={(date) => this.setState({
+                            end_date: date
+                        })}
+                    />
+                </div>
+            );
+            case 3: return (
+                <div className="form-group">
+                    <label>Car</label>
+                    <Select
+                        options={this.state.cars}
+                        placeholder={"Select car"}
+                        value={this.state.car}
+                        onChange={(e) => this.setState({
+                            car: e
                         })}
                     />
                 </div>
@@ -165,31 +175,6 @@ class AddRent extends Component {
                     }
                 </>
             );
-            case 3: return (
-                <div className="form-group">
-                    <label>Car</label>
-                    <Select
-                        options={this.state.cars}
-                        placeholder={"Select car"}
-                        value={this.state.car}
-                        onChange={(e) => this.setState({
-                            car: e
-                        })}
-                    />
-                </div>
-            );
-            case 2: return (
-                <div className="form-group">
-                    <label>End date</label>
-                    <DatePicker
-                        selected={this.state.end_date}
-                        dateFormat="dd/MM/yyyy"
-                        onChange={(date) => this.setState({
-                            end_date: date
-                        })}
-                    />
-                </div>
-            );
             case 5: return (
                 <div className="form-group">
                     <label>Car rent summary</label>
@@ -221,19 +206,31 @@ class AddRent extends Component {
 
     handleStep = (step) => {
         switch (step) {
-            case 1: {
-                console.log(1);
+            case 1:
                 RentsService.initiateRent(moment(this.state.start_date).format("DD-MM-yyyy")).then(res => {
                     this.setState({
                         id_car_rent: res.data
                     });
                     this.goNext();
                 });
-                return;
-            };
-            case 4: {
+                break;
+            case 2:
+                RentsService.setEndDate(this.state.id_car_rent, moment(this.state.end_date).format("DD-MM-yyyy")).then(res => {
+                    if (res.data > 0) {
+                        this.goNext();
+                        this.getCars();
+                    }
+                });
+                break;
+            case 3:
+                RentsService.selectCar(this.state.id_car_rent, this.state.car.value).then(res => {
+                    if (res.data > 0) {
+                        this.goNext();
+                    }
+                });
+                break;
+            case 4:
                 if (this.state.add_new_customer) {
-                    console.log(2.1);
                     RentsService.addCustomer(this.state.id_car_rent, this.state.new_customer_name, this.state.new_customer_phone, this.state.new_customer_email).then(res => {
                         if (res.data > 0) {
                             this.goNext();
@@ -249,7 +246,6 @@ class AddRent extends Component {
                         }
                     })
                 } else {
-                    console.log(2.2);
                     RentsService.selectCustomer(this.state.id_car_rent, this.state.customer?.value).then(res => {
                         if (res.data > 0) {
                             this.goNext();
@@ -265,33 +261,13 @@ class AddRent extends Component {
                         }
                     })
                 }
-                return;
-            };
-            case 3: {
-                RentsService.selectCar(this.state.id_car_rent, this.state.car.value).then(res => {
-                    if (res.data > 0) {
-                        console.log(3);
-                        this.goNext();
-                    }
-                })
-                return;
-            };
-            case 2: {
-                console.log(4);
-                RentsService.setEndDate(this.state.id_car_rent, moment(this.state.end_date).format("DD-MM-yyyy")).then(res => {
-                    if (res.data > 0) {
-                        this.goNext();
-                        this.getCars();
-                    }
-                })
-                return;
-            };
+                break;
             default: return null;
         }
     }
 
     goBack = () => {
-        if(this.state.step == 2){
+        if (this.state.step == 2) {
             RentsService.deleteRent(this.state.id_car_rent);
         }
         this.setState({
