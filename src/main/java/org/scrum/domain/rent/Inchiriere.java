@@ -1,8 +1,7 @@
 package org.scrum.domain.rent;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonRootName;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.*;
+import org.springframework.data.rest.core.annotation.RestResource;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
@@ -33,10 +32,16 @@ public class Inchiriere implements Serializable {
     @GeneratedValue
     @Column(name = "id_inchiriere")
     private Integer idInchiriere;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
+//    @JsonProperty("client")
+//    @RestResource
+//    @JsonManagedReference
+    @XmlElement(name="client")
+    @JoinColumn(name="client_id_client")
     protected Client client;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
+    @JoinColumn(name="autovehicul_id_autovehicul")
     protected Autovehicul autovehicul;
 
     @NotNull(message = "DataInchiriere is required!")
@@ -49,11 +54,12 @@ public class Inchiriere implements Serializable {
     private Date dataReturnare;
 
     //    @NotNull(message = "ZileInchiriere is required!")
-//    @Min(value = 1, message = "ZileInchiriere must be equal or bigger then 1!")
+//    @Min(value = 1, message = "ZileInchiriere must be equal or bigger than 1!")
     @Column(name = "zile_inchiriere")
     private Integer zileInchiriere;
     @Column(name = "cost_inchiriere")
     private Double costInchiriere = 0.0;
+    private String status;
 
     public Inchiriere() {
         super();
@@ -111,6 +117,8 @@ public class Inchiriere implements Serializable {
         this.idInchiriere = idInchiriere;
     }
 
+//    @JsonProperty("client")
+    @JsonGetter("customer")
     public Client getClient() {
         return client;
     }
@@ -125,6 +133,7 @@ public class Inchiriere implements Serializable {
 
     public void setAutovehicul(Autovehicul autovehicul) {
         this.autovehicul = autovehicul;
+        this.costInchiriere = calculCostInchiriere(this.dataInchiriere, this.dataReturnare, autovehicul.getCostInchiriere());
     }
 
     public Date getDataInchiriere() {
@@ -155,7 +164,20 @@ public class Inchiriere implements Serializable {
         this.client = new Client(numeClient, numar_telefon, email);
     }
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     public void setDataReturnare(Date dataReturnare) {
+        this.dataReturnare = dataReturnare;
+        this.zileInchiriere = calculZileInchiriere(this.dataInchiriere, dataReturnare);
+    }
+
+    public void modificareDataReturnare(Date dataReturnare) {
         this.dataReturnare = dataReturnare;
         this.costInchiriere = calculCostInchiriere(this.dataInchiriere, dataReturnare, this.autovehicul.getCostInchiriere());
         this.zileInchiriere = calculZileInchiriere(this.dataInchiriere, dataReturnare);

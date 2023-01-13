@@ -12,6 +12,8 @@ import UpdateCar from './Cars/UpdateCar';
 import ViewCar from './Cars/ViewCar';
 import UpdateCustomer from './Customers/UpdateCustomer';
 import ViewCustomer from './Customers/ViewCustomer';
+import UpdateRent from './Rents/UpdateRent';
+import ViewRent from './Rents/ViewRent';
 
 class PageContent extends Component {
     constructor(props) {
@@ -42,6 +44,8 @@ class PageContent extends Component {
                             <Route path="/customers/view-customer/:id" component={ViewCustomer}></Route>
                             <Route path="/rents/rents-list" component={RentsList}></Route>
                             <Route path="/rents/add-rent" component={AddRent}></Route>
+                            <Route path="/rents/update-rent/:id" component={UpdateRent}></Route>
+                            <Route path="/rents/view-rent/:id" component={ViewRent}></Route>
                         </Switch>
                     </div>
                 </div>

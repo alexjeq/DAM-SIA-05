@@ -5,7 +5,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Service
 @Transactional
@@ -63,4 +65,6 @@ public class RegisterCarRentBusinessWorkflowServiceImpl implements IRegisterCarR
         Inchiriere inchiriere = entityRepository.getReferenceById(idInchiriere);
         return new InchiriereView(idInchiriere, inchiriere.getClient().getNume(), inchiriere.getAutovehicul().getModel(), inchiriere.getDataInchiriere(), inchiriere.getDataReturnare(), inchiriere.getCostInchiriere());
     }
+
+
 }

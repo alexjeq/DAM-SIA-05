@@ -1,6 +1,9 @@
 package org.scrum.domain.rent;
 
+import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonSetter;
 
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -31,6 +34,7 @@ public class Client implements Comparable<Client>, Serializable {
     @Column(name = "cnp")
     private String CNP;
     private Double sold = 0.0;
+//    @JsonProperty("rents")
     @OneToMany(mappedBy = "client",
             cascade = CascadeType.ALL,
             fetch = FetchType.EAGER,
@@ -122,7 +126,7 @@ public class Client implements Comparable<Client>, Serializable {
     public void setIdClient(Integer idClient) {
         this.idClient = idClient;
     }
-
+@JsonGetter("rents")
     public List<Inchiriere> getInchirieri() {
         return inchirieri;
     }

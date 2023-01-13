@@ -39,6 +39,7 @@ class AddCar extends Component {
             descriere: this.state.description,
             nrPasageri: this.state.seats_nr,
             costInchiriere: this.state.rent_cost,
+            status: "0",
         }
         CarsService.createCar(payload).then(res => {
             if (res.data.idAutovehicul > 0) {

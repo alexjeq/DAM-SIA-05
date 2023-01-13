@@ -14,6 +14,7 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import org.springframework.data.rest.core.annotation.RestResource;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -46,4 +47,8 @@ public interface IInchiriereAggregateRepository extends JpaRepository<Inchiriere
     @RestResource(path = "byCarModel", rel = "byCarModel")
     @Query("SELECT i FROM Inchiriere i inner join Autovehicul c WHERE c.model like %:model%")
     List<Inchiriere> findByCarModel(@Param("model") String model);
+
+    @RestResource(path = "allRents", rel = "allRents")
+    @Query("SELECT i FROM Inchiriere i")
+    ArrayList<Inchiriere> getAllRents();
 }

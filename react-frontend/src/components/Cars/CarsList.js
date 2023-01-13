@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Label } from 'semantic-ui-react';
 import CarsService from '../../services/CarsService';
 
 class CarsList extends Component {
@@ -61,7 +62,11 @@ class CarsList extends Component {
                                         <td> {car.combustibil} </td>
                                         <td> {car.culoare} </td>
                                         <td> {car.costInchiriere}</td>
-                                        <td> {car.status}</td>
+                                        <td >
+                                            <div style={{ display: "flex", justifyContent: "center" }}>
+                                                <Label color={car.status == 1 ? "red" : "green"}>{car.status == 1 ? "Is rented" : "Is available"}</Label>
+                                            </div>
+                                        </td>
                                         <td>
                                             <button
                                                 onClick={() => this.props.history.push("/cars/update-car/" + car.idAutovehicul)}
